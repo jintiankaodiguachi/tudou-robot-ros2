@@ -1,0 +1,62 @@
+slam_toolbox:
+  ros__parameters:
+
+    # 1. 核心底座插件设置（使用谷歌开源的 Ceres 扫描匹配器）
+    solver_plugin: solver_plugins::CeresSolver
+    ceres_linear_solver: SPARSE_NORMAL_CHOLESKY
+    ceres_preconditioner: SCHUR_JACOBI
+    ceres_trust_region_strategy: LEVENBERG_MARQUARDT
+    ceres_dogleg_type: TRADITIONAL_DOGLEG
+    ceres_loss_function_type: None
+
+    # 2. 核心坐标系与话题配置（关键：必须与你的 URDF 和驱动对上暗号）
+    odom_frame: odom               # 里程计坐标系
+    base_frame: base_footprint    # 机器人车体中心坐标系（地面坐标系，与里程计发布的 child_frame 一致）
+    scan_topic: /scan              # 雷达话题名
+    mode: mapping                  # 运行模式：mapping(建图), localization(纯定位)
+
+    # 3. 内存与效率优化配置（防止你的 RK3588 占用过高）
+    debug_logging: false
+    throttle_scans: 1              # 数据流控制：1表示不跳过任何一帧雷达数据
+    transform_publish_period: 0.05 # TF发布周期 (0.05秒 = 20Hz)
+    map_update_interval: 1.0       # 地图刷新周期 (1.0秒更新一次 RViz 画面)
+
+    # 4. 传感器核心调校参数
+    max_laser_range: 20.0          # 🔥 重要：雷达最大有效测距（你的镭神X10建议限制在25米内，防止远处噪点破坏墙壁）
+    minimum_time_interval: 0.06    # 雷达两帧之间最小时间间隔
+    transform_timeout: 0.2
+    tf_buffer_duration: 30.0
+    tf_tolerance: 0.1              # TF 时间容忍度
+
+    # 5. 地图触发更新阈值（避免原地不动时频繁计算导致地图重叠）
+    minimum_travel_distance: 0.1   # 小车每平移 10 厘米，才允许更新一次地图
+    minimum_travel_heading: 0.1    # 小车每旋转约 5.7 度，才允许更新一次地图
+
+    # 6. 扫描匹配与局部滑窗控制
+    scan_buffer_size: 10           # 匹配缓冲区大小
+    scan_buffer_maximum_scan_distance: 10.0
+    link_match_minimum_response_fine: 0.1  
+    link_scan_maximum_distance: 1.5
+    loop_search_maximum_distance: 3.0
+
+    # 7. 相关性匹配参数（决定建图精细度，别乱改）
+    correlation_search_space_dimension: 0.5
+    correlation_search_space_resolution: 0.01
+    correlation_search_space_smear_deviation: 0.03
+
+    # 8. Loop Closure（回环检测与地图闭合优化，大车在走廊闭合就靠它）
+    loop_search_space_dimension: 8.0
+    loop_search_space_resolution: 0.05
+    loop_search_space_smear_deviation: 0.03
+    distance_variance_penalty: 0.5
+    angle_variance_penalty: 1.0
+
+    fine_search_angle_offset: 0.00349
+    coarse_search_angle_offset: 0.349
+    coarse_linear_search_factor: 0.5
+    fine_linear_search_factor: 0.01
+
+    # 9. 优化器惩罚项
+    minimum_angle_penalty: 0.9
+    minimum_distance_penalty: 0.5
+    use_response_expansion: true

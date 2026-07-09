@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tudou">
+    <xacro:include filename="$(find tudou_description)/urdf/tudou/base.urdf.xacro" />
+    <!-- 传感器组件 -->
+    <xacro:include filename="$(find tudou_description)/urdf/tudou/sensor/imu.urdf.xacro" />
+    <xacro:include filename="$(find tudou_description)/urdf/tudou/sensor/laser.urdf.xacro" />
+    <xacro:include filename="$(find tudou_description)/urdf/tudou/sensor/camera.urdf.xacro" />
+     <!-- 执行器组件 -->
+    <xacro:include filename="$(find tudou_description)/urdf/tudou/actor/wheel.urdf.xacro" />
+    <xacro:include filename="$(find tudou_description)/urdf/tudou/actor/caster.urdf.xacro" />
+
+    <xacro:base_xacro length="0.228" width="0.148" height="0.395" />
+    <!-- 传感器 -->
+    <xacro:imu_xacro xyz="0 -0.006 -0.115" />
+    <xacro:laser_xacro xyz="-0.104 0 0.2225" />
+    <xacro:camera_xacro xyz="0.114 0 0.1975" />
+    <!-- 执行器主动轮+从动轮 -->
+    <xacro:wheel_xacro wheel_name="left" xyz="-0.066 0.06 -0.230" />
+    <xacro:wheel_xacro wheel_name="right" xyz="-0.066 -0.06 -0.230" />
+    <xacro:caster_xacro caster_name="front" xyz="0.08 0.0 -0.230" />
+    <!-- <xacro:caster_xacro caster_name="back" xyz="-0.08 0.0 -0.2305" /> -->
+    <!-- Gazebo 插件 -->
+    <!-- <xacro:include filename="$(find fishbot_description)/urdf/fishbot/plugins/gazebo_control_plugin.xacro" /> -->
+    <!-- <xacro:gazebo_control_plugin /> -->
+    <!-- <xacro:include filename="$(find fishbot_description)/urdf/fishbot/fishbot.ros2_control.xacro" />
+    <xacro:fishbot_ros2_control />
+    <xacro:include filename="$(find fishbot_description)/urdf/fishbot/plugins/gazebo_sensor_plugin.xacro" />
+    <xacro:gazebo_sensor_plugin /> -->
+</robot>
