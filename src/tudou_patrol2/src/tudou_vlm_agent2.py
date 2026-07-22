@@ -1,23 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
-# 可用，总是报正常那个
-
-# 改进了误报警，通过优化提示词工程
-
-# 改进了误报警, 但是失败，模型卡死，按中止传图片，大模型未响应
-
-# 可用，但是误报警
-
-# 针对上一版的小改进
-
-# 换图失败版本（加了wifi)
-
-# 修复 全循环巡护不显示的问题，对应m.py
-
-# 已完善单点巡护,进一步完善监护端显示（可用版本）
-
 import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionClient
