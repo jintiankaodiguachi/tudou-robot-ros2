@@ -40,7 +40,7 @@
 
 报告中的护士站展示效果如下；**Web 服务源码尚未包含在本仓库中**。
 
-![护士站远程监护界面](docs/images/dashboard.jpeg)
+![护士站远程监护界面](docs/images/dashboard.jpg)
 
 ## 系统架构
 
